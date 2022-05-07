@@ -636,3 +636,7 @@ button:hover {
     width: 160px;
   }
 }
+
+.hidden{
+  display: none;
+}
