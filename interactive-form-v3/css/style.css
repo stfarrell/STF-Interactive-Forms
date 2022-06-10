@@ -8,6 +8,11 @@
   box-sizing: border-box;
 }
 
+
+.visible{
+  visibility: visible;
+}
+
 body,
 html {
 	width: 100%;

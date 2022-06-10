@@ -34,6 +34,7 @@ paypal.classList.add('hidden');
 const email = document.querySelector('#email');
 const form = document.querySelector('form');
 const ccNum = document.querySelector('#cc-num');
+const hints = document.querySelectorAll('.hint');
 
 //Make 'other' section visible when clicked from dropdown
 selectTitle.addEventListener('change', (e) => {
@@ -43,7 +44,7 @@ selectTitle.addEventListener('change', (e) => {
 	}
 });
 
-//Display on the tshirts that belong to the selected design.
+//Display on the t-shirts that belong to the selected design.
 tDesign.addEventListener('change', (e) => {
 	const currentValue = tDesign.value;
 	const punShirts = document.querySelectorAll(
@@ -127,25 +128,89 @@ form.addEventListener('submit', (e) => {
 		e.preventDefault();
 		nameField.parentNode.classList.remove('valid');
 		nameField.parentNode.classList.add('not-valid');
-		// nameField.parentNode.lastElementChild.style.display === 'visible';
-	} else if (
+		displayHint('name');
+	} else {
+		nameField.parentNode.classList.remove('not-valid');
+		nameField.parentNode.classList.add('valid');
+		hideHint('name');
+	}
+
+	if (
 		/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value) === false
 	) {
 		e.preventDefault();
-		alert('You have entered an invalid email address.');
-	} else if (totalCost === 0) {
+		email.parentNode.classList.remove('valid');
+		email.parentNode.classList.add('not-valid');
+		displayHint('email');
+	} else {
+		email.parentNode.classList.remove('not-valid');
+		email.parentNode.classList.add('valid');
+		hideHint('email');
+	}
+
+	if (totalCost === 0) {
 		e.preventDefault();
-		alert('You must choose at least 1 activity');
-	} else if (payment.value === 'credit-card') {
+		activityCost.parentNode.classList.remove('valid');
+		activityCost.parentNode.classList.add('not-valid');
+		displayHint('activities');
+	} else {
+		activityCost.parentNode.classList.remove('not-valid');
+		activityCost.parentNode.classList.add('valid');
+		hideHint('activities');
+	}
+
+	if (payment.value === 'credit-card') {
 		if (
 			ccNum.value.length < 13 ||
 			ccNum.value.length > 16 ||
-			ccNum.value.includes(' ', '-') ||
-			document.querySelector('#zip').value.length != 5 ||
-			document.querySelector('#cvv').value.length != 3
+			ccNum.value.includes(' ', '-')
 		) {
 			e.preventDefault();
-			alert('Something went wrong');
+			ccNum.parentNode.classList.remove('valid');
+			ccNum.parentNode.classList.add('not-valid');
+			displayHint('cc');
+		} else {
+			ccNum.parentNode.classList.remove('not-valid');
+			ccNum.parentNode.classList.add('valid');
+			hideHint('cc');
+		}
+
+		if (document.querySelector('#zip').value.length != 5) {
+			e.preventDefault();
+			zip.parentNode.classList.remove('valid');
+			zip.parentNode.classList.add('not-valid');
+			displayHint('zip');
+		} else {
+			zip.parentNode.classList.remove('not-valid');
+			zip.parentNode.classList.add('valid');
+			hideHint('zip');
+		}
+
+		if (document.querySelector('#cvv').value.length != 3) {
+			e.preventDefault();
+			cvv.parentNode.classList.remove('valid');
+			cvv.parentNode.classList.add('not-valid');
+			displayHint('cvv');
+		} else {
+			cvv.parentNode.classList.remove('not-valid');
+			cvv.parentNode.classList.add('valid');
+			hideHint('cvv');
 		}
 	}
 });
+
+function displayHint(section) {
+	hints.forEach((hint) => {
+		if (hint.classList.contains(section + '-hint')) {
+			hint.style.display = 'block';
+		}
+	});
+}
+
+function hideHint(section) {
+	hints.forEach((hint) => {
+		if (hint.classList.contains(section + '-hint')) {
+			hint.style.display = 'none';
+		}
+	});
+}
