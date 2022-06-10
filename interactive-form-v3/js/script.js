@@ -80,10 +80,24 @@ tDesign.addEventListener('change', (e) => {
 //Add up course costs and display on page
 activities.addEventListener('change', (e) => {
 	totalCost = 0;
-
 	for (box of actBoxes) {
 		if (box.checked === true) {
 			totalCost += parseInt(box.dataset.cost);
+
+			for (otherBox of actBoxes) {
+				if (
+					otherBox != box &&
+					otherBox.dataset.dayAndTime === box.dataset.dayAndTime
+				) {
+					console.log('***');
+					otherBox.parentElement.classList.add('disabled');
+				}
+			}
+		} else {
+			for (oBox of actBoxes) {
+				if (oBox != box && oBox.dataset.dayAndTime === box.dataset.dayAndTime)
+					oBox.parentElement.classList.remove('disabled');
+			}
 		}
 	}
 	activityCost.innerText = `Total = $${totalCost}`;
@@ -93,13 +107,11 @@ activities.addEventListener('change', (e) => {
 //accessibility
 for (box of actBoxes) {
 	box.addEventListener('focus', (e) => {
-		console.log('*************', e.target.parentNode);
 		e.target.parentNode.classList.add('focus');
 	});
 }
 for (box of actBoxes) {
 	box.addEventListener('blur', (e) => {
-		console.log('*************', e.target.parentNode);
 		e.target.parentNode.classList.remove('focus');
 	});
 }
@@ -123,7 +135,7 @@ payment.addEventListener('change', (e) => {
 });
 
 //Form validation section! *The regex for email verification was taken from the internet.
-form.addEventListener('submit', (e) => {
+form.addEventListener('change', (e) => {
 	if (nameField.value === '') {
 		e.preventDefault();
 		nameField.parentNode.classList.remove('valid');
@@ -199,6 +211,7 @@ form.addEventListener('submit', (e) => {
 	}
 });
 
+//display or hide the hint element
 function displayHint(section) {
 	hints.forEach((hint) => {
 		if (hint.classList.contains(section + '-hint')) {
