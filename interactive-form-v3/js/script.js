@@ -135,7 +135,7 @@ payment.addEventListener('change', (e) => {
 });
 
 //Form validation section! *The regex for email verification was taken from the internet.
-form.addEventListener('change', (e) => {
+form.addEventListener('submit', (e) => {
 	if (nameField.value === '') {
 		e.preventDefault();
 		nameField.parentNode.classList.remove('valid');
@@ -227,3 +227,42 @@ function hideHint(section) {
 		}
 	});
 }
+
+//live changes for name field and email field
+nameField.addEventListener('keyup', (e) => {
+	if (nameField.value === '') {
+		nameField.parentNode.classList.remove('valid');
+		nameField.parentNode.classList.add('not-valid');
+		displayHint('name');
+	} else {
+		nameField.parentNode.classList.remove('not-valid');
+		nameField.parentNode.classList.add('valid');
+		hideHint('name');
+	}
+});
+
+const emailHint = document.querySelector('#email-hint');
+email.addEventListener('keyup', (e) => {
+	if (email.value === '') {
+		email.parentNode.classList.remove('valid');
+		email.parentNode.classList.add('not-valid');
+		displayHint('email');
+		emailHint.innerText = 'e-mail cannot be blank';
+	} else if (email.value.includes('@') === false) {
+		email.parentNode.classList.remove('valid');
+		email.parentNode.classList.add('not-valid');
+		displayHint('email');
+		emailHint.innerText = "Don't forget the @ symbol!";
+	} else if (
+		/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value) === false
+	) {
+		email.parentNode.classList.remove('valid');
+		email.parentNode.classList.add('not-valid');
+		displayHint('email');
+		emailHint.innerText = 'Make sure the email ends in .com .gov .org or .edu';
+	} else {
+		email.parentNode.classList.remove('not-valid');
+		email.parentNode.classList.add('valid');
+		hideHint('email');
+	}
+});

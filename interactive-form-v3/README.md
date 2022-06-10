@@ -1,0 +1,2 @@
+I added the keyup event listener to the email field.
+When a user types into the email address field they get immediate feedback in 2 ways. The first is the red outline and warning symbol which will remain until the field is validated correctly. The second is conditional warning messages. If the user leaves it blank, forgets the @ symbol, or forgets the .com/.edu/.gov/.org section of the email they will get a corresponding specific error message below the field.
