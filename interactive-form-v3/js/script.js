@@ -1,15 +1,41 @@
 console.log('Test!');
-
+//Declare variables + initialize values for job role section
 const nameField = document.querySelector('#name');
-nameField.focus();
-
 const otherJobRole = document.querySelector('#other-job-role');
+const selectTitle = document.querySelector('#title');
+const selectOptions = document.querySelectorAll('#title > option');
+nameField.focus();
 otherJobRole.style.visibility = 'hidden';
 
-const selectTitle = document.querySelector('#title');
+//Declare variables for t-shirt section
+const tColor = document.querySelector('#color');
+tColor.disabled = true;
+const tDesign = document.querySelector('#design');
 
-const selectOptions = document.querySelectorAll('#title > option');
+//Declare variables + initialize values for activity check boxes section
+const activities = document.querySelector('#activities');
+const activityCost = document.querySelector('#activities-cost');
+const actBoxes = document.querySelectorAll(
+	'#activities > div > label > input[type="checkbox"]'
+);
+let totalCost = 0;
 
+//Declare variables + initialize values for job role section
+const creditCard = document.querySelector('#credit-card');
+const bitcoin = document.querySelector('#bitcoin');
+const paypal = document.querySelector('#paypal');
+document.querySelector('#payment > option[value="credit-card"').selected =
+	'selected';
+const payment = document.querySelector('#payment');
+bitcoin.classList.add('hidden');
+paypal.classList.add('hidden');
+
+//Declare variables for form validation section
+const email = document.querySelector('#email');
+const form = document.querySelector('form');
+const ccNum = document.querySelector('#cc-num');
+
+//Make 'other' section visible when clicked from dropdown
 selectTitle.addEventListener('change', (e) => {
 	const currentValue = selectTitle.value;
 	if (currentValue === 'other') {
@@ -17,10 +43,7 @@ selectTitle.addEventListener('change', (e) => {
 	}
 });
 
-const tColor = document.querySelector('#color');
-tColor.disabled = true;
-
-const tDesign = document.querySelector('#design');
+//Display on the tshirts that belong to the selected design.
 tDesign.addEventListener('change', (e) => {
 	const currentValue = tDesign.value;
 	const punShirts = document.querySelectorAll(
@@ -53,12 +76,7 @@ tDesign.addEventListener('change', (e) => {
 	}
 });
 
-const activities = document.querySelector('#activities');
-const activityCost = document.querySelector('#activities-cost');
-const actBoxes = document.querySelectorAll(
-	'#activities > div > label > input[type="checkbox"]'
-);
-let totalCost = 0;
+//Add up course costs and display on page
 activities.addEventListener('change', (e) => {
 	totalCost = 0;
 
@@ -85,15 +103,7 @@ for (box of actBoxes) {
 	});
 }
 
-const creditCard = document.querySelector('#credit-card');
-const bitcoin = document.querySelector('#bitcoin');
-const paypal = document.querySelector('#paypal');
-document.querySelector('#payment > option[value="credit-card"').selected =
-	'selected';
-
-const payment = document.querySelector('#payment');
-bitcoin.classList.add('hidden');
-paypal.classList.add('hidden');
+//Choose payment method
 payment.addEventListener('change', (e) => {
 	const currentValue = payment.value;
 	if (currentValue === 'credit-card') {
@@ -111,9 +121,7 @@ payment.addEventListener('change', (e) => {
 	}
 });
 
-const email = document.querySelector('#email');
-const form = document.querySelector('form');
-const ccNum = document.querySelector('#cc-num');
+//Form validation section! *The regex for email verification was taken from the internet.
 form.addEventListener('submit', (e) => {
 	if (nameField.value === '') {
 		e.preventDefault();
