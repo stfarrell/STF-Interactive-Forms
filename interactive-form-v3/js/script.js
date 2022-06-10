@@ -41,6 +41,8 @@ selectTitle.addEventListener('change', (e) => {
 	const currentValue = selectTitle.value;
 	if (currentValue === 'other') {
 		otherJobRole.style.visibility = 'visible';
+	} else {
+		otherJobRole.style.visibility = 'hidden';
 	}
 });
 
@@ -91,12 +93,15 @@ activities.addEventListener('change', (e) => {
 				) {
 					console.log('***');
 					otherBox.parentElement.classList.add('disabled');
+					otherBox.setAttribute('disabled', true);
 				}
 			}
 		} else {
 			for (oBox of actBoxes) {
-				if (oBox != box && oBox.dataset.dayAndTime === box.dataset.dayAndTime)
+				if (oBox != box && oBox.dataset.dayAndTime === box.dataset.dayAndTime) {
 					oBox.parentElement.classList.remove('disabled');
+					oBox.removeAttribute('disabled');
+				}
 			}
 		}
 	}
