@@ -68,6 +68,7 @@ tDesign.addEventListener('change', (e) => {
 			punShirts[0].selected = 'selected';
 		}
 	} else {
+		tColor.disabled = false;
 		for (child of tColor.children) {
 			if (child.dataset.theme === 'js puns') {
 				child.classList.add('hidden');
